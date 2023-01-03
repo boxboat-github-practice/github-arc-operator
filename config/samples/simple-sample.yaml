@@ -1,0 +1,8 @@
+apiVersion: charts.example.com/v1alpha1
+kind: ActionsRunnerController
+metadata:
+  name: actionsrunnercontroller-sample
+spec:
+  authSecret:
+    create: true
+    github_token: <your token here> 
