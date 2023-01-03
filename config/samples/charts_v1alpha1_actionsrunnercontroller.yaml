@@ -1,0 +1,114 @@
+apiVersion: charts.example.com/v1alpha1
+kind: ActionsRunnerController
+metadata:
+  name: actionsrunnercontroller-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/actions-runner-controller/values.yaml
+  additionalVolumeMounts: []
+  additionalVolumes: []
+  admissionWebHooks: {}
+  affinity: {}
+  authSecret:
+    annotations: {}
+    create: false
+    enabled: true
+    name: controller-manager
+  certManagerEnabled: true
+  defaultScaleDownDelay: 10m
+  dockerRegistryMirror: ""
+  enableLeaderElection: true
+  env: {}
+  fullnameOverride: ""
+  githubWebhookServer:
+    affinity: {}
+    enabled: false
+    fullnameOverride: ""
+    imagePullSecrets: []
+    ingress:
+      annotations: {}
+      enabled: false
+      hosts:
+      - extraPaths: []
+        host: chart-example.local
+        paths: []
+      ingressClassName: ""
+      tls: []
+    nameOverride: ""
+    nodeSelector: {}
+    podAnnotations: {}
+    podDisruptionBudget:
+      enabled: false
+    podLabels: {}
+    podSecurityContext: {}
+    priorityClassName: ""
+    replicaCount: 1
+    resources: {}
+    secret:
+      create: false
+      enabled: false
+      github_webhook_secret_token: ""
+      name: github-webhook-server
+    securityContext: {}
+    service:
+      annotations: {}
+      ports:
+      - name: http
+        port: 80
+        protocol: TCP
+        targetPort: http
+      type: ClusterIP
+    serviceAccount:
+      annotations: {}
+      create: true
+      name: ""
+    tolerations: []
+    useRunnerGroupsVisibility: false
+  image:
+    actionsRunnerImagePullSecrets: []
+    actionsRunnerRepositoryAndTag: summerwind/actions-runner:latest
+    dindSidecarRepositoryAndTag: docker:dind
+    pullPolicy: IfNotPresent
+    repository: summerwind/actions-runner-controller
+  imagePullSecrets: []
+  labels: {}
+  metrics:
+    port: 8443
+    proxy:
+      enabled: true
+      image:
+        repository: quay.io/brancz/kube-rbac-proxy
+        tag: v0.13.1
+    serviceAnnotations: {}
+    serviceMonitor: false
+    serviceMonitorLabels: {}
+  nameOverride: ""
+  nodeSelector: {}
+  podAnnotations: {}
+  podDisruptionBudget:
+    enabled: false
+  podLabels: {}
+  podSecurityContext: {}
+  priorityClassName: ""
+  rbac: {}
+  replicaCount: 1
+  resources: {}
+  runner:
+    statusUpdateHook:
+      enabled: false
+  scope:
+    singleNamespace: false
+    watchNamespace: ""
+  securityContext: {}
+  service:
+    annotations: {}
+    port: 443
+    type: ClusterIP
+  serviceAccount:
+    annotations: {}
+    create: true
+    name: ""
+  syncPeriod: 1m
+  tolerations: []
+  webhookPort: 9443
+  
+  
