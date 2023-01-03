@@ -52,6 +52,10 @@ IMG ?= controller:latest
 .PHONY: all
 all: docker-build
 
+.PHONY: tag-test
+tag-test:
+	echo $(IMG)
+
 ##@ General
 
 # The help target prints out all targets with their descriptions organized
