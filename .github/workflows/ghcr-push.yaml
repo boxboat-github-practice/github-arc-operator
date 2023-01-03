@@ -29,4 +29,5 @@ jobs:
     - name: Docker Publish
       shell: bash
       run: |
+        export IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER)
         make docker-push
