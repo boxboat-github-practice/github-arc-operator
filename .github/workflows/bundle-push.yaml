@@ -25,7 +25,6 @@ jobs:
     - name: Docker Build
       shell: bash
       run: |
-        export IMG=ghcr.io/${GITHUB_REPOSITORY,,}:bundle-$(date +%Y%m%d.$GITHUB_RUN_NUMBER)
         make bundle bundle-build
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
@@ -36,5 +35,4 @@ jobs:
     - name: Docker Publish
       shell: bash
       run: |
-        export IMG=ghcr.io/${GITHUB_REPOSITORY,,}:bundle-$(date +%Y%m%d.$GITHUB_RUN_NUMBER)
         make bundle-push
