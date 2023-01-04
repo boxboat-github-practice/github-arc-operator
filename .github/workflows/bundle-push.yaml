@@ -1,4 +1,4 @@
-name: Docker Build and Push
+name: Build and Push OLM Bundle Image
 
 on:
   push:
