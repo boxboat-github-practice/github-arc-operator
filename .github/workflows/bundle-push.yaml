@@ -1,4 +1,4 @@
-name: Build and Push OLM Bundle Image
+name: Build and Push Images
 
 on:
   push:
@@ -22,17 +22,19 @@ jobs:
         export OPERATOR_SDK_DL_URL=https://github.com/operator-framework/operator-sdk/releases/download/v1.26.0
         curl -LO ${OPERATOR_SDK_DL_URL}/operator-sdk_${OS}_${ARCH}
         chmod +x operator-sdk_${OS}_${ARCH} && sudo mv operator-sdk_${OS}_${ARCH} /usr/local/bin/operator-sdk
-    - name: Docker Build
+    - name: Build
       shell: bash
       run: |
-        make bundle bundle-build
+        export IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER)
+        make bundle bundle-build docker-build
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Docker Publish
+    - name: Publish
       shell: bash
       run: |
-        make bundle-push
+        export IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER)
+        make docker-push bundle-push
