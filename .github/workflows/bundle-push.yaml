@@ -2,12 +2,8 @@ name: Build and Push Images
 
 on:
   push:
-    branches:
-      - main
-    paths-ignore: 
-      - README.md
-      - .gitignore
-      - .github/**
+    tags: 
+      - '*'
   workflow_dispatch:
     
 jobs:
