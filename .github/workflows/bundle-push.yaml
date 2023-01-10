@@ -18,7 +18,7 @@ jobs:
     - name: Set Version
       run: |
         TAG=${GITHUB_REF#refs/*/}
-        [[ ! -v TAG ]] TAG=experimental
+        [[ ! -v TAG ]] && TAG=experimental
         echo "TAG=$TAG" >> $GITHUB_ENV 
         echo "IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$TAG" >> $GITHUB_ENV
         echo "VERSION=$TAG" >> $GITHUB_ENV
