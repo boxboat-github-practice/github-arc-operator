@@ -20,7 +20,7 @@ jobs:
         echo "action: ${{ github.event_name }}"
         echo "ref: ${{  github.ref_name }}"
         TAG=${GITHUB_REF#refs/*/}
-        [[ $GITHUB_REF_TYPE == "Tag" ]] && TAG=experimental
+        [[ $GITHUB_REF_TYPE == "tag" ]] && TAG=experimental
         echo "TAG=$TAG" >> $GITHUB_ENV 
         echo "IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$TAG" >> $GITHUB_ENV
         echo "VERSION=$TAG" >> $GITHUB_ENV
