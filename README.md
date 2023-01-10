@@ -1,5 +1,5 @@
 # simple-arc-operator
-
+helm based operator for https://github.com/actions-runner-controller/actions-runner-controller
 - built with operator-sdk
   - https://sdk.operatorframework.io/docs/building-operators/helm/tutorial/
 
