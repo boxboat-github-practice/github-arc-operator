@@ -17,6 +17,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Set Version
       run: |
+        git fetch -a
         TAG=${GITHUB_REF#refs/*/}
         echo "working dir:"
         ls -la
