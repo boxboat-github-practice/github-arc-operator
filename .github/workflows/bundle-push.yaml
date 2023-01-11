@@ -17,15 +17,17 @@ jobs:
     - uses: actions/checkout@v3
     - name: Set Version
       run: |
-        echo "action: ${{ github.event_name }}"
-        echo "ref: ${{  github.ref_name }}"
         TAG=${GITHUB_REF#refs/*/}
-        echo "reftype: $GITHUB_REF_TYPE"
-        [[ $GITHUB_REF_TYPE != "tag" ]] && TAG=experimental
-        echo "TAG=$TAG" >> $GITHUB_ENV 
+        if [[ $GITHUB_REF_TYPE != "tag" ]]; then
+          VERSION=$(git tag -l -n1 --format="%(refname:strip=2)")
+          VERSION=$(awk -F. '/[0-9]+\./{$NF++;print}' OFS=. <<< "$TAG")
+          TAG=experimental
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+        else
+          echo "VERSION=$TAG" >> $GITHUB_ENV
+        fi
         echo "IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$TAG" >> $GITHUB_ENV
-        echo "VERSION=$TAG" >> $GITHUB_ENV
-        git tag -l
+        echo "BUNDLE_IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$TAG" >> $GITHUB_ENV
     - name: Install operator-sdk
       run: |
         export ARCH=$(case $(uname -m) in x86_64) echo -n amd64 ;; aarch64) echo -n arm64 ;; *) echo -n $(uname -m) ;; esac)
