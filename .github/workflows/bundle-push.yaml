@@ -18,12 +18,16 @@ jobs:
     - name: Set Version
       run: |
         TAG=${GITHUB_REF#refs/*/}
+        echo "working dir:"
+        ls -la
+        echo "tag:"
+        git tag -l -n1 --format="%(refname:strip=2)"
         echo "reftype: $GITHUB_REF_TYPE"
         if [[ $GITHUB_REF_TYPE != "tag" ]]; then
           VERSION=$(git tag -l -n1 --format="%(refname:strip=2)")
           VERSION=$(awk -F. '/[0-9]+\./{$NF++;print}' OFS=. <<< "$VERSION")
           TAG=experimental
-          echo $VERSION
+          echo "version: $VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
         else
           echo "VERSION=$TAG" >> $GITHUB_ENV
