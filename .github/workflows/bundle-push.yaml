@@ -25,6 +25,7 @@ jobs:
         echo "TAG=$TAG" >> $GITHUB_ENV 
         echo "IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$TAG" >> $GITHUB_ENV
         echo "VERSION=$TAG" >> $GITHUB_ENV
+        git tag -l
     - name: Install operator-sdk
       run: |
         export ARCH=$(case $(uname -m) in x86_64) echo -n amd64 ;; aarch64) echo -n arm64 ;; *) echo -n $(uname -m) ;; esac)
