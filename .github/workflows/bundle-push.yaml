@@ -22,12 +22,14 @@ jobs:
           VERSION=$(git tag -l -n1 --format="%(refname:strip=2)")
           VERSION=$(awk -F. '/[0-9]+\./{$NF++;print}' OFS=. <<< "$TAG")
           TAG=experimental
+          echo $VERSION
           echo "VERSION=$VERSION" >> $GITHUB_ENV
         else
           echo "VERSION=$TAG" >> $GITHUB_ENV
         fi
         echo "IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$TAG" >> $GITHUB_ENV
-        echo "BUNDLE_IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$TAG" >> $GITHUB_ENV
+        echo "BUNDLE_IMG=ghcr.io/${GITHUB_REPOSITORY,,}-bundle:$TAG" >> $GITHUB_ENV
+        echo "CATALOG_IMG=ghcr.io/${GITHUB_REPOSITORY,,}-catalog:$TAG" >> $GITHUB_ENV
     - name: Install operator-sdk
       run: |
         export ARCH=$(case $(uname -m) in x86_64) echo -n amd64 ;; aarch64) echo -n arm64 ;; *) echo -n $(uname -m) ;; esac)
@@ -38,7 +40,7 @@ jobs:
     - name: Build
       shell: bash
       run: |
-        make bundle bundle-build docker-build
+        make bundle bundle-build docker-build catalog-build
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
       with:
@@ -48,7 +50,7 @@ jobs:
     - name: Publish
       shell: bash
       run: |
-        make docker-push bundle-push
+        make docker-push bundle-push catalog-push
     - name: list images
       shell: bash
       run: |
