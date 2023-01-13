@@ -4,6 +4,12 @@ metadata:
   creationTimestamp: null
   name: {{ include "actions-runner-controller.managerRoleName" . }}
 rules:
+- verbs:
+  - "*"
+  apigroups:
+  - ""
+  resources:
+  - customresourcedefinitions
 - apiGroups:
   - actions.summerwind.dev
   resources:
