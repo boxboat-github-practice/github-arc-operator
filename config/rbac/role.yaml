@@ -10,6 +10,14 @@ rules:
   resources:
   - customresourcedefinitions
 
+- verbs:
+  - "*"
+  apigroups:
+  - cert-manager.io
+  resources:
+  - certificates
+  - issuers
+
 ##
 ## Base operator rules
 ##
