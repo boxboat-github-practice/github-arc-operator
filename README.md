@@ -27,3 +27,8 @@ operator-sdk init --plugins helm --domain example.com --helm-chart actions-runne
     kubectl destroy -f config/samples/simple-sample.yaml
     kubectl destroy -f config/samples/runner-deployment.yaml
     ```
+
+# cleanup
+```sh
+operator-sdk cleanup simple-arc-operator
+```
