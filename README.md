@@ -7,6 +7,10 @@ helm based operator for https://github.com/actions-runner-controller/actions-run
   - [cert-manager](https://cert-manager.io/docs/installation/helm/)
   - [olm](https://sdk.operatorframework.io/docs/olm-integration/tutorial-bundle/#enabling-olm)
 
+# initialize
+```sh
+operator-sdk init --plugins helm --domain example.com --helm-chart actions-runner-controller --helm-chart-repo https://actions-runner-controller.github.io/actions-runner-controller
+```
 # deploy 
   - create gh api token
   - add token to [sample controller manifest](./config/samples/simple-sample.yaml)
