@@ -54,6 +54,12 @@ rules:
   - "clusterroles"
 - verbs:
   - "*"
+  apigroups:
+  - "customresourcedefinitions.apiextensions.k8s.io"
+  resources:
+  - "customresourcedefinitions"
+- verbs:
+  - "*"
   apiGroups:
   - "admissionregistration.k8s.io"
   resources:
