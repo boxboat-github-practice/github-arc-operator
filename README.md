@@ -39,6 +39,11 @@ operator-sdk init --plugins helm --domain example.com --helm-chart actions-runne
   ```sh
   operator-sdk cleanup simple-arc-operator
   ```
+
+- CRDs created by arc instances are not deleted by the operator-sdk
+```sh
+for i in $(k get customresourcedefinitions.apiextensions.k8s.io | grep ".*actions\.summerwind\.dev" | awk '{print $1}'); do kubectl delete customresourcedefinition $i; done
+```
 - if you're testing, and not changing the version between builds, make sure to clear the cache folder or you won't pull new changes on a redeploy
   ```sh
   rm -rf cache/

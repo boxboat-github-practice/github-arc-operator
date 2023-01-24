@@ -5,18 +5,6 @@ metadata:
   name: {{ include "actions-runner-controller.managerRoleName" . }}
 rules:
 - apiGroups:
-  - "apiextensions.k8s.io"
-  resources:
-  - customresourcedefinitions
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
   - actions.summerwind.dev
   resources:
   - horizontalrunnerautoscalers
