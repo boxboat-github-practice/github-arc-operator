@@ -14,7 +14,7 @@ helm based operator for https://github.com/actions-runner-controller/actions-run
 operator-sdk init --plugins helm --domain example.com --helm-chart actions-runner-controller --helm-chart-repo https://actions-runner-controller.github.io/actions-runner-controller
 ```
 # deploy 
-  - run the operator bundle with operator-sdk
+  - run the operator bundle with operator-sdk 
     ```sh
     operator-sdk run bundle ghcr.io/boxboat-github-practice/simple-arc-operator-bundle:experimental
     ```
@@ -35,6 +35,11 @@ operator-sdk init --plugins helm --domain example.com --helm-chart actions-runne
     ```
 
 # cleanup
-```sh
-operator-sdk cleanup simple-arc-operator
-```
+- uninstall operator
+  ```sh
+  operator-sdk cleanup simple-arc-operator
+  ```
+- if you're testing, and not changing the version between builds, make sure to clear the cache folder or you won't pull new changes on a redeploy
+  ```sh
+  rm -rf cache/
+  ```

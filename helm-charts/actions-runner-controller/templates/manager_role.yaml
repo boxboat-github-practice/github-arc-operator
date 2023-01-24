@@ -6,7 +6,7 @@ metadata:
 rules:
 - verbs:
   - "*"
-  apigroups:
+  apiGroups:
   - "apiextensions.k8s.io"
   resources:
   - customresourcedefinitions
