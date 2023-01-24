@@ -8,7 +8,7 @@ spec:
   authSecret:
     name: arc-secret-2
     create: true
-    github_token: 
+    github_token:  
   scope:
     singleNamespace: true
     watchNamespace: test2

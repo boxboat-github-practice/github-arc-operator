@@ -6,6 +6,3 @@ spec:
   authSecret:
     create: true
     github_token: 
-  scope:
-    singleNamespace: true
-    watchNamespace: test1
