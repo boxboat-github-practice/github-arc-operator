@@ -48,3 +48,14 @@ for i in $(k get customresourcedefinitions.apiextensions.k8s.io | grep ".*action
   ```sh
   rm -rf cache/
   ```
+
+## todo
+- codify operator manifest changes
+  - [manager role](./config/rbac/role.yaml)
+    - add permissions for cert-manager issuers and certificates
+    - add permissions for customresourcedefinitions
+  - [manager deployment](./config/manager/manager.yaml)
+    - increase resource limits
+- codify arc helm chart changes
+  - [manager_role](./helm-charts/actions-runner-controller/templates/manager_role.yaml)
+    - add permissions for apiGroup actions.summerwind.dev horizontalrunnerautoscalers
