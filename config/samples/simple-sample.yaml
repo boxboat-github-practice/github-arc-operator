@@ -5,4 +5,4 @@ metadata:
 spec:
   authSecret:
     create: true
-    github_token:
+    github_token: 
