@@ -14,3 +14,12 @@ images:
 - name: controller
   newName: ghcr.io/boxboat-github-practice/simple-arc-operator
   newTag: "20230103.2"
+
+patchesJson6902:
+- target:
+    kind: Deployment 
+    name: controller-manager
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/resources/limits/memory
+      value: 500mi

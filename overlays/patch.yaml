@@ -1,0 +1,12 @@
+- apiGroups:
+  - actions.summerwind.dev
+  resources:
+  - horizontalrunnerautoscalers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
