@@ -23,9 +23,9 @@ jobs:
 
     - name: Initialize Operator
       run: |
-        rm -rf src
-        mkdir src
-        cd src
+        rm -rf simple-arc-operator
+        mkdir simple-arc-operator
+        cd simple-arc-operator
         operator-sdk init \
           --plugins helm \
           --domain example.com \
@@ -35,8 +35,8 @@ jobs:
     - name: Configure Operator Manifests
       run: |
         ./chart-patch.sh
-        cat overlays/resource_limits.yaml >> src/config/manager/kustomization.yaml
-        cat overlays/role_permissions.yaml >> src/config/rbac/kustomization.yaml
+        cat overlays/resource_limits.yaml >> simple-arc-operator/config/manager/kustomization.yaml
+        cat overlays/role_permissions.yaml >> simple-arc-operator/config/rbac/kustomization.yaml
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4

@@ -1,3 +1,5 @@
+
+patchesJson6902:
 - target:
     kind: ClusterRole
     name: manager-role
