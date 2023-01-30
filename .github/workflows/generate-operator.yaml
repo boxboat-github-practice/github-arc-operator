@@ -28,7 +28,6 @@ jobs:
         cd simple-arc-operator
         operator-sdk init \
           --plugins helm \
-          --domain ghcr.io \
           --group boxboat-github-practice \
           --helm-chart actions-runner-controller \
           --helm-chart-repo https://actions-runner-controller.github.io/actions-runner-controller
