@@ -1,5 +1,5 @@
 # Use the 'create api' subcommand to add watches to this file.
-- group: charts.example.com
+- group: boxboat-github-practice.my.domain
   version: v1alpha1
   kind: ActionsRunnerController
   chart: helm-charts/actions-runner-controller

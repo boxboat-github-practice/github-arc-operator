@@ -1,9 +1,61 @@
-apiVersion: charts.example.com/v1alpha1
+apiVersion: boxboat-github-practice.my.domain/v1alpha1
 kind: ActionsRunnerController
 metadata:
   name: actionsrunnercontroller-sample
 spec:
   # Default values copied from <project_dir>/helm-charts/actions-runner-controller/values.yaml
+  actionsMetrics:
+    port: 8443
+    proxy:
+      enabled: true
+      image:
+        repository: quay.io/brancz/kube-rbac-proxy
+        tag: v0.13.1
+    serviceAnnotations: {}
+    serviceMonitor: false
+    serviceMonitorLabels: {}
+  actionsMetricsServer:
+    affinity: {}
+    enabled: false
+    fullnameOverride: ""
+    imagePullSecrets: []
+    ingress:
+      annotations: {}
+      enabled: false
+      hosts:
+      - extraPaths: []
+        host: chart-example.local
+        paths: []
+      ingressClassName: ""
+      tls: []
+    logFormat: text
+    nameOverride: ""
+    nodeSelector: {}
+    podAnnotations: {}
+    podLabels: {}
+    podSecurityContext: {}
+    priorityClassName: ""
+    replicaCount: 1
+    resources: {}
+    secret:
+      create: false
+      enabled: false
+      github_webhook_secret_token: ""
+      name: actions-metrics-server
+    securityContext: {}
+    service:
+      annotations: {}
+      ports:
+      - name: http
+        port: 80
+        protocol: TCP
+        targetPort: http
+      type: ClusterIP
+    serviceAccount:
+      annotations: {}
+      create: true
+      name: ""
+    tolerations: []
   additionalVolumeMounts: []
   additionalVolumes: []
   admissionWebHooks: {}
@@ -33,6 +85,7 @@ spec:
         paths: []
       ingressClassName: ""
       tls: []
+    logFormat: text
     nameOverride: ""
     nodeSelector: {}
     podAnnotations: {}
@@ -71,6 +124,7 @@ spec:
     repository: summerwind/actions-runner-controller
   imagePullSecrets: []
   labels: {}
+  logFormat: text
   metrics:
     port: 8443
     proxy:
