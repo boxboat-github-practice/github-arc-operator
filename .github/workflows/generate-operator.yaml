@@ -1,5 +1,8 @@
 name: GitHub Actions Demo
 on:
+  push:
+    branches:
+      - codify-changes
   workflow_dispatch: 
 
 jobs:
