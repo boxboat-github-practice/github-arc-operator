@@ -23,13 +23,13 @@ jobs:
 
     - name: Initialize Operator
       run: |
-        export IMAGE_TAG_BASE="ghcr.io/boxboat-github-practice/simple-arc-operator"
         rm -rf simple-arc-operator
         mkdir simple-arc-operator
         cd simple-arc-operator
         operator-sdk init \
           --plugins helm \
-          --domain "ghcr.io/boxboat-github-practice" \
+          --domain ghcr.io \
+          --group boxboat-github-practice \
           --helm-chart actions-runner-controller \
           --helm-chart-repo https://actions-runner-controller.github.io/actions-runner-controller
 
