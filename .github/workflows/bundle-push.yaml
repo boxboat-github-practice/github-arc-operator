@@ -33,6 +33,7 @@ jobs:
         echo "IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$TAG" >> $GITHUB_ENV
         echo "BUNDLE_IMG=ghcr.io/${GITHUB_REPOSITORY,,}-bundle:$TAG" >> $GITHUB_ENV
         echo "CATALOG_IMG=ghcr.io/${GITHUB_REPOSITORY,,}-catalog:$TAG" >> $GITHUB_ENV
+        echo "IMAGE_TAG_BASE=ghcr.io/${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
     - name: Install operator-sdk
       run: |
@@ -52,5 +53,6 @@ jobs:
     - name: Build and Push Images
       shell: bash
       run: |
+        cd simple-arc-operator/
         make docker-build docker-push
         make bundle bundle-build bundle-push catalog-build catalog-push

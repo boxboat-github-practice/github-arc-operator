@@ -1,0 +1,6 @@
+# Use the 'create api' subcommand to add watches to this file.
+- group: github-practice.boxboat.com
+  version: v1alpha1
+  kind: ActionsRunnerController
+  chart: helm-charts/actions-runner-controller
+#+kubebuilder:scaffold:watch
