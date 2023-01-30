@@ -34,6 +34,7 @@ jobs:
 
     - name: Configure Operator Manifests
       run: |
+        ls -lah
         ./chart-patch.sh
         cat overlays/resource_limits.yaml >> config/manager/kustomization.yaml
         cat overlays/role_permissions.yaml >> config/rbac/kustomization.yaml
