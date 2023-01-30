@@ -52,5 +52,6 @@ jobs:
     - name: Build and Push Images
       shell: bash
       run: |
+        cd src/
         make docker-build docker-push
         make bundle bundle-build bundle-push catalog-build catalog-push
