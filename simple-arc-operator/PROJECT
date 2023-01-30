@@ -1,4 +1,4 @@
-domain: example.com
+domain: boxboat.com
 layout:
 - helm.sdk.operatorframework.io/v1
 plugins:
@@ -9,8 +9,8 @@ resources:
 - api:
     crdVersion: v1
     namespaced: true
-  domain: example.com
-  group: charts
+  domain: boxboat.com
+  group: github-practice
   kind: ActionsRunnerController
   version: v1alpha1
 version: "3"
