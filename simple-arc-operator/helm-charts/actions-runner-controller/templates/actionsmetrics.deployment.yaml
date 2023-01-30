@@ -1,37 +1,37 @@
-{{- if .Values.githubWebhookServer.enabled }}
+{{- if .Values.actionsMetricsServer.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "actions-runner-controller-github-webhook-server.fullname" . }}
+  name: {{ include "actions-runner-controller-actions-metrics-server.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "actions-runner-controller.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.githubWebhookServer.replicaCount }}
+  replicas: {{ .Values.actionsMetricsServer.replicaCount }}
   selector:
     matchLabels:
-      {{- include "actions-runner-controller-github-webhook-server.selectorLabels" . | nindent 6 }}
+      {{- include "actions-runner-controller-actions-metrics-server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.githubWebhookServer.podAnnotations }}
+      {{- with .Values.actionsMetricsServer.podAnnotations }}
       annotations:
         kubectl.kubernetes.io/default-logs-container: "github-webhook-server"
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "actions-runner-controller-github-webhook-server.selectorLabels" . | nindent 8 }}
-      {{- with .Values.githubWebhookServer.podLabels }}
+        {{- include "actions-runner-controller-actions-metrics-server.selectorLabels" . | nindent 8 }}
+      {{- with .Values.actionsMetricsServer.podLabels }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-      {{- with .Values.githubWebhookServer.imagePullSecrets }}
+      {{- with .Values.actionsMetricsServer.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "actions-runner-controller-github-webhook-server.serviceAccountName" . }}
+      serviceAccountName: {{ include "actions-runner-controller-actions-metrics-server.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.githubWebhookServer.podSecurityContext | nindent 8 }}
-      {{- with .Values.githubWebhookServer.priorityClassName }}
+        {{- toYaml .Values.actionsMetricsServer.podSecurityContext | nindent 8 }}
+      {{- with .Values.actionsMetricsServer.priorityClassName }}
       priorityClassName: "{{ . }}"
       {{- end }}
       containers:
@@ -39,29 +39,23 @@ spec:
         {{- $metricsHost := .Values.metrics.proxy.enabled | ternary "127.0.0.1" "0.0.0.0" }}
         {{- $metricsPort := .Values.metrics.proxy.enabled | ternary "8080" .Values.metrics.port }}
         - "--metrics-addr={{ $metricsHost }}:{{ $metricsPort }}"
-        {{- if .Values.githubWebhookServer.logLevel }}
-        - "--log-level={{ .Values.githubWebhookServer.logLevel }}"
-        {{- end }}
-        {{- if .Values.scope.singleNamespace }}
-        - "--watch-namespace={{ default .Release.Namespace .Values.scope.watchNamespace }}"
+        {{- if .Values.actionsMetricsServer.logLevel }}
+        - "--log-level={{ .Values.actionsMetricsServer.logLevel }}"
         {{- end }}
         {{- if .Values.runnerGithubURL  }}
         - "--runner-github-url={{ .Values.runnerGithubURL }}"
         {{- end }}
-        {{- if .Values.githubWebhookServer.queueLimit }}
-        - "--queue-limit={{ .Values.githubWebhookServer.queueLimit }}"
-        {{- end }}
-        {{- if .Values.githubWebhookServer.logFormat  }}  
-        - "--log-format={{ .Values.githubWebhookServer.logFormat }}"
+        {{- if .Values.actionsMetricsServer.logFormat  }}  
+        - "--log-format={{ .Values.actionsMetricsServer.logFormat }}"
         {{- end }}
         command:
-        - "/github-webhook-server"
+        - "/actions-metrics-server"
         env:
         - name: GITHUB_WEBHOOK_SECRET_TOKEN
           valueFrom:
             secretKeyRef:
               key: github_webhook_secret_token
-              name: {{ include "actions-runner-controller-github-webhook-server.secretName" . }}
+              name: {{ include "actions-runner-controller-actions-metrics-server.secretName" . }}
               optional: true
         {{- if .Values.githubEnterpriseServerURL  }}
         - name: GITHUB_ENTERPRISE_URL
@@ -75,7 +69,7 @@ spec:
         - name: GITHUB_UPLOAD_URL
           value: {{ .Values.githubUploadURL }}
         {{- end }}
-        {{- if and .Values.githubWebhookServer.useRunnerGroupsVisibility .Values.githubWebhookServer.secret.enabled }}
+        {{- if .Values.actionsMetricsServer.secret.enabled }}
         - name: GITHUB_TOKEN
           valueFrom:
             secretKeyRef:
@@ -111,12 +105,12 @@ spec:
               name: {{ include "actions-runner-controller.secretName" . }}
               optional: true
         {{- end }}
-        {{- range $key, $val := .Values.githubWebhookServer.env }}
+        {{- range $key, $val := .Values.actionsMetricsServer.env }}
         - name: {{ $key }}
           value: {{ $val | quote }}
         {{- end }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag  | default (cat "v" .Chart.AppVersion | replace " " "") }}"
-        name: github-webhook-server
+        name: actions-metrics-server
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: 8000
@@ -128,9 +122,9 @@ spec:
           protocol: TCP
         {{- end }}
         resources:
-          {{- toYaml .Values.githubWebhookServer.resources | nindent 12 }}
+          {{- toYaml .Values.actionsMetricsServer.resources | nindent 12 }}
         securityContext:
-          {{- toYaml .Values.githubWebhookServer.securityContext | nindent 12 }}
+          {{- toYaml .Values.actionsMetricsServer.securityContext | nindent 12 }}
       {{- if .Values.metrics.proxy.enabled }}
       - args:
         - "--secure-listen-address=0.0.0.0:{{ .Values.metrics.port }}"
@@ -149,19 +143,19 @@ spec:
           {{- toYaml .Values.securityContext | nindent 12 }}
       {{- end }}
       terminationGracePeriodSeconds: 10
-      {{- with .Values.githubWebhookServer.nodeSelector }}
+      {{- with .Values.actionsMetricsServer.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.githubWebhookServer.affinity }}
+      {{- with .Values.actionsMetricsServer.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.githubWebhookServer.tolerations }}
+      {{- with .Values.actionsMetricsServer.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.githubWebhookServer.topologySpreadConstraints }}
+      {{- with .Values.actionsMetricsServer.topologySpreadConstraints }}
       topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}
