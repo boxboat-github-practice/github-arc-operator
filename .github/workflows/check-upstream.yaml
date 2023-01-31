@@ -47,6 +47,4 @@ jobs:
     needs: check-local-version
     runs-on: ubuntu-latest
     if: ${{ needs.check-local-version.update }} == true
-    steps:
-      - name: Generate Operator
-        uses: boxboat-github-practice/simple-arc-operator/.github/workflows/generate-operator.yaml
+    uses: ./.github/workflows/generate-operator.yaml
