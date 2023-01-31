@@ -49,4 +49,4 @@ jobs:
     if: ${{ needs.check-local-version.update }} == true
     steps:
       - name: Generate Operator
-        uses: ${GITHUB_REPOSITORY,,}/.github/workflows/generate-operator.yaml
+        uses: boxboat-github-practice/simple-arc-operator/.github/workflows/generate-operator.yaml
