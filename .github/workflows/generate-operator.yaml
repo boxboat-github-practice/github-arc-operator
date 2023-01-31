@@ -1,12 +1,9 @@
-name: GitHub Actions Demo
+name: Generate Operator
 on:
-  push:
-    branches:
-      - codify-changes
-  workflow_dispatch: 
+  workflow_call: 
 
 jobs:
-  containers:
+  generate:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
