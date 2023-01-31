@@ -31,8 +31,9 @@ jobs:
 
         if [ "$LOCAL_VERSION" == "$UPSTREAM_VERSION" ]; then
           echo "Versions match"      
-          echo "Local:    $LOCAL_VERSION"
-          echo "Upstream: $UPSTREAM_VERSION"
         else
           echo "Versions mismatch regenerate operator"
         fi
+
+        echo "Local:    $LOCAL_VERSION"
+        echo "Upstream: $UPSTREAM_VERSION"
