@@ -1,6 +1,7 @@
-name: Check Upstream
+name: Check Upstream Chart Version
 on: 
-  schedule: 0 8 * * 1 
+  schedule: 
+  - cron: '0 8 * * 1' 
   workflow_dispatch:
 
 jobs:
