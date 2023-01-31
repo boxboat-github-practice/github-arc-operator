@@ -45,6 +45,5 @@ jobs:
 
   generate-operator:
     needs: check-local-version
-    runs-on: ubuntu-latest
     if: ${{ needs.check-local-version.update }} == true
     uses: ./.github/workflows/generate-operator.yaml
