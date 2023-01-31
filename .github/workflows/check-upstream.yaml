@@ -43,8 +43,9 @@ jobs:
         echo "Local:    $LOCAL_VERSION"
         echo "Upstream: $UPSTREAM_VERSION"
 
-  generate-new-operator:
+  generate-operator:
     needs: check-local-version
     if: ${{ needs.check-local-version.update }} == true
-    - name: Generate Operator
-      uses: ./.github/workflows/generate-operator.yaml
+    steps:
+      - name: Generate Operator
+        uses: ./.github/workflows/generate-operator.yaml
