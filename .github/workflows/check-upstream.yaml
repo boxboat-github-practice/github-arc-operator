@@ -1,8 +1,6 @@
 name: Check Upstream Chart Version
 on: 
-  push:
-    branches:
-      - compare-versions
+  schedule: 0 8 * * 1 
   workflow_dispatch:
 
 jobs:
@@ -45,5 +43,5 @@ jobs:
 
   generate-operator:
     needs: check-local-version
-    if: needs.check-local-version.outputs.update == 'false' 
+    if: needs.check-local-version.outputs.update == 'true' 
     uses: ./.github/workflows/generate-operator.yaml
