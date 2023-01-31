@@ -27,7 +27,7 @@ jobs:
 
         helm repo update
 
-        UPSTREAM_VERSION=$(helm search repo actions-runner-controller -o json | jq .[0].version)
+        UPSTREAM_VERSION=$(helm search repo actions-runner-controller -o json | jq -r .[0].version)
 
         if [ "$LOCAL_VERSION" == "$UPSTREAM_VERSION" ]; then
           echo "Versions match"      
