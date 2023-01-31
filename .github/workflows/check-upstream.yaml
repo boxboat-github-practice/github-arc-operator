@@ -9,6 +9,8 @@ jobs:
   check-local-version:
     name: Check Local Version
     runs-on: ubuntu-latest
+    outputs:
+      update: ${{ steps.compare.outputs.update }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -18,6 +20,7 @@ jobs:
       uses: azure/setup-helm@v3
     
     - name: Compare Versions
+      id: compare
       run: |
         CHART_PATH="simple-arc-operator/helm-charts/actions-runner-controller/Chart.yaml"
         LOCAL_VERSION=$(grep -Po "(?<=version: )(\d+.?){3}" $CHART_PATH)
@@ -31,9 +34,17 @@ jobs:
 
         if [ "$LOCAL_VERSION" == "$UPSTREAM_VERSION" ]; then
           echo "Versions match"      
+          echo "update=false" >> $GITHUB_OUTPUT
         else
-          echo "Versions mismatch regenerate operator"
+          echo "Versions do not match"
+          echo "update=true" >> $GITHUB_OUTPUT
         fi
 
         echo "Local:    $LOCAL_VERSION"
         echo "Upstream: $UPSTREAM_VERSION"
+
+  generate-new-operator:
+    needs: check-local-version
+    if: ${{ needs.check-local-version.update }} == true
+    - name: Generate Operator
+      uses: ./.github/workflows/generate-operator.yaml
