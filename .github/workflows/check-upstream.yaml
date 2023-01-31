@@ -45,6 +45,7 @@ jobs:
 
   generate-operator:
     needs: check-local-version
+    runs-on: ubuntu-latest
     if: ${{ needs.check-local-version.update }} == true
     steps:
       - name: Generate Operator
