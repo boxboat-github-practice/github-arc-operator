@@ -19,20 +19,20 @@ jobs:
     
     - name: Compare Versions
       run: |
-      CHART_PATH="simple-arc-operator/helm-charts/actions-runner-controller/Chart.yaml"
-      LOCAL_VERSION=$(grep -Po "(?<=version: )(\d+.?){3}" $CHART_PATH)
-      
-      helm repo add actions-runner-controller \
-        https://actions-runner-controller.github.io/actions-runner-controller
+        CHART_PATH="simple-arc-operator/helm-charts/actions-runner-controller/Chart.yaml"
+        LOCAL_VERSION=$(grep -Po "(?<=version: )(\d+.?){3}" $CHART_PATH)
+        
+        helm repo add actions-runner-controller \
+          https://actions-runner-controller.github.io/actions-runner-controller
 
-      helm repo update
+        helm repo update
 
-      UPSTREAM_VERSION=$(helm search repo actions-runner-controller -o json | jq .[0].version)
+        UPSTREAM_VERSION=$(helm search repo actions-runner-controller -o json | jq .[0].version)
 
-      if [ "$LOCAL_VERSION" == "$UPSTREAM_VERSION" ]; then
-        echo "Versions match"      
-        echo "Local:    $LOCAL_VERSION"
-        echo "Upstream: $UPSTREAM_VERSION"
-      else
-        echo "Versions mismatch regenerate operator"
-      fi
+        if [ "$LOCAL_VERSION" == "$UPSTREAM_VERSION" ]; then
+          echo "Versions match"      
+          echo "Local:    $LOCAL_VERSION"
+          echo "Upstream: $UPSTREAM_VERSION"
+        else
+          echo "Versions mismatch regenerate operator"
+        fi
