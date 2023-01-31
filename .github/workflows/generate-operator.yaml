@@ -35,6 +35,8 @@ jobs:
         ./chart-patch.sh
         cat overlays/resource_limits.yaml >> simple-arc-operator/config/manager/kustomization.yaml
         cat overlays/role_permissions.yaml >> simple-arc-operator/config/rbac/kustomization.yaml
+        mkdir -p simple-arc-operator/config/manifests/base &&\
+          cp overlays/simple-arc-operator.clusterserviceversion.yaml "$_"
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
