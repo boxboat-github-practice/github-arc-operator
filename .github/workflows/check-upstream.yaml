@@ -1,4 +1,4 @@
-name: Check Upstream Chart Version
+name: Check Upstream
 on: 
   schedule: 0 8 * * 1 
   workflow_dispatch:
