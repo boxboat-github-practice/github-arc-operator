@@ -45,5 +45,5 @@ jobs:
 
   generate-operator:
     needs: check-local-version
-    if: ${{ needs.check-local-version.update }} == false 
+    if: ${{ needs.check-local-version.update }} == 'false' 
     uses: ./.github/workflows/generate-operator.yaml
