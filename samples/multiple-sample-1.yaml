@@ -1,0 +1,14 @@
+apiVersion: charts.example.com/v1alpha1
+kind: ActionsRunnerController
+metadata:
+  name: actionsrunnercontroller-sample-1
+  namespace: arc-controllers
+spec:
+  leaderElectionId: 1
+  authSecret:
+    name: arc-secret-1
+    create: true
+    github_token:  
+  scope:
+    singleNamespace: true
+    watchNamespace: test1

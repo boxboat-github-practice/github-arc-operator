@@ -1,0 +1,8 @@
+apiVersion: github-practice.boxboat.com/v1alpha1
+kind: ActionsRunnerController
+metadata:
+  name: actionsrunnercontroller-sample-1
+spec:
+  authSecret:
+    create: true
+    github_token: 
