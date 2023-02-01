@@ -55,7 +55,7 @@ jobs:
         ]' \
           simple-arc-operator/config/rbac/role.yaml
 
-        mkdir -p simple-arc-operator/config/manifests/base &&\
+        mkdir -p simple-arc-operator/config/manifests/bases &&\
           cp overlays/simple-arc-operator.clusterserviceversion.yaml "$_"
 
     - name: Create Pull Request
