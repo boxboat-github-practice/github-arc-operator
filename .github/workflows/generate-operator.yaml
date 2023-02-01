@@ -52,6 +52,7 @@ jobs:
             "apiGroups": [""],
             "resources": ["serviceaccounts"],
             "verbs": ["*"]
+          }
         ]' \
           simple-arc-operator/config/rbac/role.yaml
 
