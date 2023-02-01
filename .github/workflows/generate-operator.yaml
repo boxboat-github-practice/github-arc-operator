@@ -35,10 +35,10 @@ jobs:
       run: |
         ./chart-patch.sh
 
-        yq -yi '.spec.template.spec.containers[0].resources.limits.memory = "500Mi"' \
+        yq -i eval '.spec.template.spec.containers[0].resources.limits.memory = "500Mi"' \
           simple-arc-operator/config/manager/manager.yaml
 
-        yq -yi '.rules + [
+        yq -i eval '.rules + [
           { 
             "apiGroups": ["apiextensions.k8s.io"], 
             "resources": ["customresourcedefinitions"],
