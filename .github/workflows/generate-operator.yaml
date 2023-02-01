@@ -33,8 +33,24 @@ jobs:
     - name: Configure Operator Manifests
       run: |
         ./chart-patch.sh
-        cat overlays/resource_limits.yaml >> simple-arc-operator/config/manager/kustomization.yaml
-        cat overlays/role_permissions.yaml >> simple-arc-operator/config/rbac/kustomization.yaml
+
+        yq -yi '.spec.template.spec.containers[0].resources.limits.memory = "500Mi"' \
+          simple-arc-operator/config/manager/manager.yaml
+
+        yq -yi '.rules + [
+          { 
+            "apiGroups": ["apiextensions.k8s.io"], 
+            "resources": ["customresourcedefinitions"],
+            "verbs": ["*"]
+          },
+          {
+            "apiGroups": ["cert-manager.io"],
+            "resources": ["certificates", "issuers"],
+            "verbs": ["*"]
+          }
+        ]' \
+          simple-arc-operator/config/rbac/role.yaml
+
         mkdir -p simple-arc-operator/config/manifests/base &&\
           cp overlays/simple-arc-operator.clusterserviceversion.yaml "$_"
 

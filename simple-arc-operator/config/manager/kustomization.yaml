@@ -1,11 +1,2 @@
 resources:
 - manager.yaml
-
-patchesJson6902:
-- target:
-    kind: Deployment 
-    name: controller-manager
-  patch: |-
-    - op: replace
-      path: /spec/template/spec/containers/0/resources/limits/memory
-      value: 500mi
