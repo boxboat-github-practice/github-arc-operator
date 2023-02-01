@@ -49,6 +49,7 @@ jobs:
             "resources": ["certificates", "issuers"],
             "verbs": ["*"]
           },
+          {
             "apiGroups": [""],
             "resources": ["serviceaccounts"],
             "verbs": ["*"]
