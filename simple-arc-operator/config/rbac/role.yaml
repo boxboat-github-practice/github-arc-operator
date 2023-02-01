@@ -91,4 +91,10 @@ rules:
       - issuers
     verbs:
       - '*'
+  - apiGroups:
+      - ""
+    resources:
+      - serviceaccounts
+    verbs:
+      - '*'
 #+kubebuilder:scaffold:rules
