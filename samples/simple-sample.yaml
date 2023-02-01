@@ -5,4 +5,4 @@ metadata:
 spec:
   authSecret:
     create: true
-    github_token: 
+    github_token: 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

@@ -48,7 +48,10 @@ jobs:
             "apiGroups": ["cert-manager.io"],
             "resources": ["certificates", "issuers"],
             "verbs": ["*"]
-          }
+          },
+            "apiGroups": [""],
+            "resources": ["serviceaccounts"],
+            "verbs": ["*"]
         ]' \
           simple-arc-operator/config/rbac/role.yaml
 
