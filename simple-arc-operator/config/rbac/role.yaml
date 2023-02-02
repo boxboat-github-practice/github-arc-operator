@@ -102,6 +102,8 @@ rules:
     resources:
       - clusterrolebindings
       - clusterroles
+      - roles
+      - rolebindings
     verbs:
       - '*'
 #+kubebuilder:scaffold:rules
