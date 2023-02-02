@@ -1,6 +1,10 @@
 name: Generate Operator
 on:
   workflow_call: 
+    inputs:
+      version:
+        required: false
+        type: string
   workflow_dispatch:
 
 jobs:
@@ -74,5 +78,4 @@ jobs:
       uses: peter-evans/create-pull-request@v4
       with:
         branch: new-release
-        title: Regenerated operator with new chart version
-
+        title: Regenerated operator for new chart version ${{ inputs.version }}

@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       update: ${{ steps.compare.outputs.update }}
+      version: ${{ steps.compare.outputs.chart_version}}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -41,8 +42,12 @@ jobs:
 
         echo "Local:    $LOCAL_VERSION"
         echo "Upstream: $UPSTREAM_VERSION"
+        echo "chart_version=$UPSTREAM_VERSION"
 
   generate-operator:
     needs: check-local-version
     if: needs.check-local-version.outputs.update == 'true' 
     uses: ./.github/workflows/generate-operator.yaml
+    with:
+      version: ${{ needs.check-local-version.outputs.chart_version }}
+
