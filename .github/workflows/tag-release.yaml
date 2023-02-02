@@ -12,8 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - run: |
-      VERSION=$(git tag -l -n1 --format="%(refname:strip=2)" | tail -n1)
-      VERSION=$(awk -F. '/[0-9]+\./{$(NF-1)++;print}' OFS=. <<< "$VERSION")
-      git tag $VERSION
-      git push --tags
+      with:
+        fetch-depth: 0
+
+    - name: Push Tag
+      run: |
+        VERSION=$(git tag -l -n1 --format="%(refname:strip=2)" | tail -n1)
+        VERSION=$(awk -F. '/[0-9]+\./{$(NF-1)++;print}' OFS=. <<< "$VERSION")
+        git tag $VERSION
+        git push --tags
