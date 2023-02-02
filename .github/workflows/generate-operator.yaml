@@ -53,6 +53,11 @@ jobs:
             "apiGroups": [""],
             "resources": ["serviceaccounts"],
             "verbs": ["*"]
+          },
+          {
+            "apiGroups": ["rbac.authorization.k8s.io"],
+            "resources": ["clusterrolebindings", "clusterroles"],
+            "verbs": ["*"]
           }
         ]' \
           simple-arc-operator/config/rbac/role.yaml
