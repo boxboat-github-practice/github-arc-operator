@@ -36,7 +36,7 @@ spec:
   - runners
   links:
   - name: Github Arc Operator
-    url: https://github-arc-operator.domain
+    url: https://github.com/boxboat-github-practice/github-arc-operator
   maintainers:
   - email: Michael.McMullen@ibm.com
     name: mbmcmullen27
