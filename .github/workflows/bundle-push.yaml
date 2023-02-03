@@ -9,6 +9,11 @@ on:
       - .gitignore
       - .github/**
   workflow_dispatch:
+  workflow_call: 
+    inputs:
+      tag:
+        required: false
+        type: string
     
 jobs:
   bundle:
@@ -20,15 +25,18 @@ jobs:
 
     - name: Set Version
       run: |
-        TAG=${GITHUB_REF#refs/*/}
-        if [[ $GITHUB_REF_TYPE != "tag" ]]; then
+        if [[ $GITHUB_REF_TYPE == "tag" ]]; then
+          TAG=${GITHUB_REF#refs/*/}
+          echo "VERSION=$TAG" >> $GITHUB_ENV
+        elif [[ ! -z ${{ inputs.tag }} ]]; then
+          TAG=${{ inputs.tag }}
+          echo "VERSION=${{ inputs.tag }}" >> $GITHUB_ENV
+        else
           VERSION=$(git tag -l -n1 --format="%(refname:strip=2)" | tail -n1)
           VERSION=$(awk -F. '/[0-9]+\./{$NF++;print}' OFS=. <<< "$VERSION")
           TAG=experimental
           echo "version: $VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-        else
-          echo "VERSION=$TAG" >> $GITHUB_ENV
         fi
         echo "IMG=ghcr.io/${GITHUB_REPOSITORY,,}:$TAG" >> $GITHUB_ENV
         echo "BUNDLE_IMG=ghcr.io/${GITHUB_REPOSITORY,,}-bundle:$TAG" >> $GITHUB_ENV
