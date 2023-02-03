@@ -64,3 +64,10 @@ jobs:
         cd github-arc-operator/
         make docker-build docker-push
         make bundle bundle-build bundle-push catalog-build catalog-push
+
+    - name: Create Release Branch
+      run: |
+        git checkout -b release-${VERSION}
+        git add .
+        git commit -am "$VERSION bundle created"
+        git push -u origin release-${VERSION}
