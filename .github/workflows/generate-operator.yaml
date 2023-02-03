@@ -25,9 +25,9 @@ jobs:
 
     - name: Initialize Operator
       run: |
-        rm -rf simple-arc-operator
-        mkdir simple-arc-operator
-        cd simple-arc-operator
+        rm -rf github-arc-operator
+        mkdir github-arc-operator
+        cd github-arc-operator
         operator-sdk init \
           --plugins helm \
           --domain boxboat.com \
@@ -40,7 +40,7 @@ jobs:
         ./chart-patch.sh
 
         yq -i eval '.spec.template.spec.containers[0].resources.limits.memory = "500Mi"' \
-          simple-arc-operator/config/manager/manager.yaml
+          github-arc-operator/config/manager/manager.yaml
 
         yq -i eval '.rules += [
           { 
@@ -69,10 +69,10 @@ jobs:
             "verbs": ["*"]
           }
         ]' \
-          simple-arc-operator/config/rbac/role.yaml
+          github-arc-operator/config/rbac/role.yaml
 
-        mkdir -p simple-arc-operator/config/manifests/bases &&\
-          cp overlays/simple-arc-operator.clusterserviceversion.yaml "$_"
+        mkdir -p github-arc-operator/config/manifests/bases &&\
+          cp overlays/github-arc-operator.clusterserviceversion.yaml "$_"
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4

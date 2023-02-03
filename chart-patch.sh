@@ -1,4 +1,4 @@
-filepath="simple-arc-operator/helm-charts/actions-runner-controller/templates/manager_role.yaml"
+filepath="github-arc-operator/helm-charts/actions-runner-controller/templates/manager_role.yaml"
 headStart=$(grep -n "rules:"  $filepath | awk -F':' '{print $1}')
 tailStart=$(($headStart + 1))
 head -n${headStart} $filepath > head

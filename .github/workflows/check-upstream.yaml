@@ -22,7 +22,7 @@ jobs:
     - name: Compare Versions
       id: compare
       run: |
-        CHART_PATH="simple-arc-operator/helm-charts/actions-runner-controller/Chart.yaml"
+        CHART_PATH="github-arc-operator/helm-charts/actions-runner-controller/Chart.yaml"
         LOCAL_VERSION=$(grep -Po "(?<=version: )(\d+.?){3}" $CHART_PATH)
         
         helm repo add actions-runner-controller \

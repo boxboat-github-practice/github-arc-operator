@@ -1,4 +1,4 @@
-# simple-arc-operator
+# github-arc-operator
 helm based operator for https://github.com/actions-runner-controller/actions-runner-controller
 - built with operator-sdk
   - https://sdk.operatorframework.io/docs/building-operators/helm/tutorial/
@@ -16,7 +16,7 @@ operator-sdk init --plugins helm --domain example.com --helm-chart actions-runne
 # deploy 
   - run the operator bundle with operator-sdk 
     ```sh
-    operator-sdk run bundle ghcr.io/boxboat-github-practice/simple-arc-operator-bundle:experimental
+    operator-sdk run bundle ghcr.io/boxboat-github-practice/github-arc-operator-bundle:experimental
     ```
   - create gh api token
   - add token to [sample controller manifest](./config/samples/simple-sample.yaml)
@@ -37,7 +37,7 @@ operator-sdk init --plugins helm --domain example.com --helm-chart actions-runne
 # cleanup
 - uninstall operator
   ```sh
-  operator-sdk cleanup simple-arc-operator
+  operator-sdk cleanup github-arc-operator
   ```
 
 - CRDs created by arc instances are not deleted by the operator-sdk

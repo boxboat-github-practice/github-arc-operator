@@ -4,13 +4,13 @@ metadata:
   annotations:
     alm-examples: '[]'
     capabilities: Basic Install
-  name: simple-arc-operator.v0.0.0
+  name: github-arc-operator.v0.0.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions: {}
   description: helm based operator for github actions runner controller
-  displayName: simple-arc-operator
+  displayName: github-arc-operator
   icon:
   - base64data: ""
     mediatype: ""
@@ -35,8 +35,8 @@ spec:
   - self-hosted
   - runners
   links:
-  - name: Simple Arc Operator
-    url: https://simple-arc-operator.domain
+  - name: Github Arc Operator
+    url: https://github.com/boxboat-github-practice/github-arc-operator
   maintainers:
   - email: Michael.McMullen@ibm.com
     name: mbmcmullen27
