@@ -79,8 +79,8 @@ jobs:
         ls -lah
         ./chart-patch.sh
         $CHART_PATH="github-arc-operator/helm-charts/actions-runner-controller"
-        cp overlays/scc_template/* $CHART_PATH/templates/
-        cat overlays/scc_values.yaml >> $CHART_PATH/values.yaml
+        cp overlays/scc_template/* "$CHART_PATH/templates/"
+        cat overlays/scc_values.yaml >> "$CHART_PATH/values.yaml"
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
