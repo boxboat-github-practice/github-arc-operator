@@ -78,7 +78,7 @@ jobs:
         # and permissions to manager role
         ls -lah
         ./chart-patch.sh
-        $CHART_PATH="github-arc-operator/helm-charts/actions-runner-controller"
+        $CHART_PATH=github-arc-operator/helm-charts/actions-runner-controller/templates
         cp overlays/scc_template/* "$CHART_PATH/templates/"
         cat overlays/scc_values.yaml >> "$CHART_PATH/values.yaml"
 
