@@ -1,0 +1,22 @@
+{{- if .Values.openshift }}
+{{- range .Values.runnerNamespaces }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: system:openshift:scc:{{ .Values.runnerServiceAccount.name }}
+  labels:
+    {{- include "actions-runner-controller.labels" . | nindent 4 }} 
+  {{- with .Values.clusterRoleBinding.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }} 
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:openshift:scc:{{ .Values.runnerServiceAccount.name }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Values.runnerServiceAccount.name }}
+  namespace: {{ . }}
+{{- end }}
+{{- end }}
