@@ -7,3 +7,6 @@ spec:
   authSecret:
     create: true
     github_token: 
+  runnerNamespaces:
+    - ghrunners-1
+    - ghrunners-2
