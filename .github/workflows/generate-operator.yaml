@@ -66,6 +66,11 @@ jobs:
             "apiGroups": ["admissionregistration.k8s.io"],
             "resources": ["mutatingwebhookconfigurations", "validatingwebhookconfigurations"],
             "verbs": ["*"]
+          },
+          {
+            "apiGroups": ["security.openshift.io"],
+            "resources": ["securitycontextconstraints"],
+            "verbs": ["*"]
           }
         ]' \
           github-arc-operator/config/rbac/role.yaml
