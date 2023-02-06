@@ -1,0 +1,11 @@
+{{- if .Values.createRunnerNamespaces }}
+{{- $labels := (include "actions-runner-controller.labels" .) }}
+{{- range .Values.runnerNamespaces }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ . }}
+  labels:
+    {{- $labels | nindent 4 }} 
+{{- end }}
+{{- end }}
