@@ -113,4 +113,10 @@ rules:
       - validatingwebhookconfigurations
     verbs:
       - '*'
+  - apiGroups:
+      - security.openshift.io
+    resources:
+      - securitycontextconstraints
+    verbs:
+      - '*'
 #+kubebuilder:scaffold:rules
