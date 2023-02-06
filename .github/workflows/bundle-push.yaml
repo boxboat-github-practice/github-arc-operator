@@ -30,7 +30,7 @@ jobs:
           TAG=${GITHUB_REF#refs/*/}
           echo "VERSION=$TAG" >> $GITHUB_ENV
         elif [[ ! -z $TAG ]]; then
-          echo "VERSION=${{ inputs.tag }}" >> $GITHUB_ENV
+          echo "VERSION=$TAG" >> $GITHUB_ENV
         else
           VERSION=$(git tag -l -n1 --format="%(refname:strip=2)" | tail -n1)
           VERSION=$(awk -F. '/[0-9]+\./{$NF++;print}' OFS=. <<< "$VERSION")

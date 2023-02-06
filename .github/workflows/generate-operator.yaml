@@ -54,7 +54,7 @@ jobs:
           },
           {
             "apiGroups": [""],
-            "resources": ["serviceaccounts"],
+            "resources": ["serviceaccounts", "namespaces"],
             "verbs": ["*"]
           },
           {

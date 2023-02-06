@@ -8,5 +8,5 @@ spec:
     create: true
     github_token: 
   runnerNamespaces:
-    - ghrunners-1
-    - ghrunners-2
+    - ghrunners-3
+    - ghrunners-4
