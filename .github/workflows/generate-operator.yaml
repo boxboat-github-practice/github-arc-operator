@@ -39,6 +39,7 @@ jobs:
       run: |
         ./chart-patch.sh
 
+        # modify operator manifests with yq
         yq -i eval '.spec.template.spec.containers[0].resources.limits.memory = "500Mi"' \
           github-arc-operator/config/manager/manager.yaml
 
@@ -71,8 +72,14 @@ jobs:
         ]' \
           github-arc-operator/config/rbac/role.yaml
 
+        # copy Cluster Service Version (CSV)
         mkdir -p github-arc-operator/config/manifests/bases &&\
           cp overlays/github-arc-operator.clusterserviceversion.yaml "$_"
+        
+        # add security context constraint templates to chart
+        $CHART_PATH="github-arc-operator/helm-charts/actions-runner-controller"
+        cp overlays/scc_template/* $CHART_PATH/templates/
+        cat overlays/scc_values.yaml >> $CHART_PATH/values.yaml
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
