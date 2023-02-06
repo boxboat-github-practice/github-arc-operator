@@ -77,7 +77,7 @@ jobs:
         # add security context constraint templates to chart 
         # and permissions to manager role
         ./chart-patch.sh
-        cp overlays/scc_template/* github-arc-operator/helm-charts/actions-runner-controller
+        cp overlays/scc_template/* github-arc-operator/helm-charts/actions-runner-controller/templates
         cat overlays/scc_values.yaml >> github-arc-operator/helm-charts/actions-runner-controller/values.yaml
 
     - name: Create Pull Request

@@ -3,6 +3,7 @@ kind: ActionsRunnerController
 metadata:
   name: actionsrunnercontroller-sample-1
 spec:
+  openshift: true
   authSecret:
     create: true
     github_token: 
