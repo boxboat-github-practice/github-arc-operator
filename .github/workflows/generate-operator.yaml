@@ -37,8 +37,6 @@ jobs:
 
     - name: Configure Operator Manifests
       run: |
-        ./chart-patch.sh
-
         # modify operator manifests with yq
         yq -i eval '.spec.template.spec.containers[0].resources.limits.memory = "500Mi"' \
           github-arc-operator/config/manager/manager.yaml
@@ -76,7 +74,10 @@ jobs:
         mkdir -p github-arc-operator/config/manifests/bases &&\
           cp overlays/github-arc-operator.clusterserviceversion.yaml "$_"
         
-        # add security context constraint templates to chart
+        # add security context constraint templates to chart 
+        # and permissions to manager role
+        ls -lah
+        ./chart-patch.sh
         $CHART_PATH="github-arc-operator/helm-charts/actions-runner-controller"
         cp overlays/scc_template/* $CHART_PATH/templates/
         cat overlays/scc_values.yaml >> $CHART_PATH/values.yaml
