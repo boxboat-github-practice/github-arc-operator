@@ -76,9 +76,9 @@ jobs:
         
         # add security context constraint templates to chart 
         # and permissions to manager role
-        ls -lah
         ./chart-patch.sh
         $CHART_PATH=github-arc-operator/helm-charts/actions-runner-controller/templates
+        ls $CHART_PATH
         cp overlays/scc_template/* "$CHART_PATH/templates/"
         cat overlays/scc_values.yaml >> "$CHART_PATH/values.yaml"
 
