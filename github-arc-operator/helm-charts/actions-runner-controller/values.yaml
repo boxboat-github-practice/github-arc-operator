@@ -373,3 +373,27 @@ actionsMetricsServer:
     #    hosts:
     #      - chart-example.local
 
+# Default values for openshift.
+
+openshift: false
+# OpenShift cluster must have (at least) one Security Context Constraint (global) for Runners. No need for more than one.
+securityContextConstraint:
+  create: true
+  name: "ghr-priv"
+
+runnerServiceAccount:
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "ghr-sa"
+
+runnerNamespaces:
+  - "ghrunners"
+
+clusterRole:
+  annotations: {}
+
+clusterRoleBinding: 
+  annotations: {}
+  
