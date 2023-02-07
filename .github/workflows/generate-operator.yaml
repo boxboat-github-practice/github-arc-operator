@@ -79,9 +79,10 @@ jobs:
         mkdir -p github-arc-operator/config/manifests/bases &&\
           cp overlays/github-arc-operator.clusterserviceversion.yaml "$_"
         
-        # add security context constraint templates to chart 
-        # and permissions to manager role
+        # add permissions to manager role
         ./chart-patch.sh
+
+        # add security context constraint templates to chart 
         cp overlays/scc_template/* github-arc-operator/helm-charts/actions-runner-controller/templates
         cat overlays/scc_values.yaml >> github-arc-operator/helm-charts/actions-runner-controller/values.yaml
 
