@@ -95,6 +95,7 @@ rules:
       - ""
     resources:
       - serviceaccounts
+      - namespaces
     verbs:
       - '*'
   - apiGroups:
