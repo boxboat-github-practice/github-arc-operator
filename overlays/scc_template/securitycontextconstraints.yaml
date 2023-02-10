@@ -1,5 +1,5 @@
-{{- if .Values.openshift }}
 {{- if .Values.securityContextConstraint.create -}}
+{{- if .Values.openshift }}
 allowHostDirVolumePlugin: false
 allowHostIPC: false
 allowHostNetwork: false
@@ -16,7 +16,7 @@ groups:
 - system:authenticated
 kind: SecurityContextConstraints
 metadata:
-  name: ghr-priv
+  name: {{ .Values.securityContextConstraint.name }}
 readOnlyRootFilesystem: false
 requiredDropCapabilities:
 - KILL

@@ -2,7 +2,7 @@ apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
   name: example-runnerdeploy
-  namespace: ghrunners-1
+  namespace: ghrunners
 spec:
   replicas: 1
   template:

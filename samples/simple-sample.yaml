@@ -1,12 +1,11 @@
-apiVersion: github-practice.boxboat.com/v1alpha1
 kind: ActionsRunnerController
+apiVersion: github-practice.boxboat.com/v1alpha1
 metadata:
-  name: actionsrunnercontroller-sample-1
+  name: arc-sample
 spec:
   openshift: true
   authSecret:
-    create: true
-    github_token: 
+    name: ghauth
   runnerNamespaces:
-    - ghrunners-3
-    - ghrunners-4
+    - test1
+    - test2
