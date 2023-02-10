@@ -6,6 +6,7 @@ spec:
   openshift: true
   authSecret:
     name: ghauth
+  createRunnerNamespaces: true
   runnerNamespaces:
     - test1
     - test2

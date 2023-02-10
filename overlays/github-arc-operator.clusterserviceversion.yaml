@@ -12,7 +12,12 @@ metadata:
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
-  customresourcedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - description: ActionsRunnerController is the schema for the ActionsRunnerController API
+      displayName: Actions Runner Controller
+      kind: ActionsRunnerController
+      name: actionsrunnercontrollers.github-practice.boxboat.com
   description: helm based operator for github actions runner controller
   displayName: github-arc-operator
   icon:
@@ -41,6 +46,10 @@ spec:
   links:
   - name: Github Arc Operator
     url: https://github.com/boxboat-github-practice/github-arc-operator
+  - name: Actions Runner Controller
+    url: https://github.com/actions/actions-runner-controller
+  - name: Boxboat
+    url: https://boxboat.com/
   maintainers:
   - email: Michael.McMullen@ibm.com
     name: mbmcmullen27
