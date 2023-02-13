@@ -2,13 +2,40 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
-    alm-examples: '[]'
+    alm-examples: |-
+      [
+        {
+          "apiVersion": "github-practice.boxboat.com/v1alpha1",
+          "kind": "ActionsRunnerController",
+          "metadata": {
+            "name": "arc-sample"
+          },
+          "spec": {
+            "authSecret": {
+              "name": "ghauth"
+            },
+            "createRunnerNamespaces": true,
+            "openshift": true,
+            "runnerNamespaces": [
+              "test1",
+              "test2"
+            ]
+          }
+        }
+      ]
     capabilities: Basic Install
-  name: github-arc-operator.v0.0.0
+    createdAt: "2023-02-13T17:35:41Z"
+    operators.operatorframework.io/builder: operator-sdk-v1.26.0
+    operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
+  name: github-arc-operator.v1.0.4
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
-  customresourcedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - kind: ActionsRunnerController
+      name: actionsrunnercontrollers.github-practice.boxboat.com
+      version: v1alpha1
   description: helm based operator for github actions runner controller
   displayName: github-arc-operator
   icon:
@@ -16,8 +43,262 @@ spec:
     mediatype: png
   install:
     spec:
-      deployments: null
-    strategy: ""
+      clusterPermissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - namespaces
+          verbs:
+          - get
+        - apiGroups:
+          - ""
+          resources:
+          - secrets
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - events
+          verbs:
+          - create
+        - apiGroups:
+          - github-practice.boxboat.com
+          resources:
+          - actionsrunnercontrollers
+          - actionsrunnercontrollers/status
+          - actionsrunnercontrollers/finalizers
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          - services
+          - services/finalizers
+          - endpoints
+          - persistentvolumeclaims
+          - events
+          - configmaps
+          - secrets
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - apps
+          resources:
+          - deployments
+          - daemonsets
+          - replicasets
+          - statefulsets
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - apiextensions.k8s.io
+          resources:
+          - customresourcedefinitions
+          verbs:
+          - '*'
+        - apiGroups:
+          - cert-manager.io
+          resources:
+          - certificates
+          - issuers
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - serviceaccounts
+          - namespaces
+          verbs:
+          - '*'
+        - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - clusterrolebindings
+          - clusterroles
+          - roles
+          - rolebindings
+          verbs:
+          - '*'
+        - apiGroups:
+          - admissionregistration.k8s.io
+          resources:
+          - mutatingwebhookconfigurations
+          - validatingwebhookconfigurations
+          verbs:
+          - '*'
+        - apiGroups:
+          - security.openshift.io
+          resources:
+          - securitycontextconstraints
+          verbs:
+          - '*'
+        - apiGroups:
+          - authentication.k8s.io
+          resources:
+          - tokenreviews
+          verbs:
+          - create
+        - apiGroups:
+          - authorization.k8s.io
+          resources:
+          - subjectaccessreviews
+          verbs:
+          - create
+        serviceAccountName: github-arc-operator-controller-manager
+      deployments:
+      - label:
+          app.kubernetes.io/component: manager
+          app.kubernetes.io/created-by: github-arc-operator
+          app.kubernetes.io/instance: controller-manager
+          app.kubernetes.io/managed-by: kustomize
+          app.kubernetes.io/name: deployment
+          app.kubernetes.io/part-of: github-arc-operator
+          control-plane: controller-manager
+        name: github-arc-operator-controller-manager
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              control-plane: controller-manager
+          strategy: {}
+          template:
+            metadata:
+              annotations:
+                kubectl.kubernetes.io/default-container: manager
+              labels:
+                control-plane: controller-manager
+            spec:
+              affinity:
+                nodeAffinity:
+                  requiredDuringSchedulingIgnoredDuringExecution:
+                    nodeSelectorTerms:
+                    - matchExpressions:
+                      - key: kubernetes.io/arch
+                        operator: In
+                        values:
+                        - amd64
+                        - arm64
+                        - ppc64le
+                        - s390x
+                      - key: kubernetes.io/os
+                        operator: In
+                        values:
+                        - linux
+              containers:
+              - args:
+                - --secure-listen-address=0.0.0.0:8443
+                - --upstream=http://127.0.0.1:8080/
+                - --logtostderr=true
+                - --v=0
+                image: gcr.io/kubebuilder/kube-rbac-proxy:v0.13.0
+                name: kube-rbac-proxy
+                ports:
+                - containerPort: 8443
+                  name: https
+                  protocol: TCP
+                resources:
+                  limits:
+                    cpu: 500m
+                    memory: 128Mi
+                  requests:
+                    cpu: 5m
+                    memory: 64Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop:
+                    - ALL
+              - args:
+                - --health-probe-bind-address=:8081
+                - --metrics-bind-address=127.0.0.1:8080
+                - --leader-elect
+                - --leader-election-id=github-arc-operator
+                image: ghcr.io/boxboat-github-practice/github-arc-operator:1.0.4
+                livenessProbe:
+                  httpGet:
+                    path: /healthz
+                    port: 8081
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+                name: manager
+                readinessProbe:
+                  httpGet:
+                    path: /readyz
+                    port: 8081
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                resources:
+                  limits:
+                    cpu: 500m
+                    memory: 500Mi
+                  requests:
+                    cpu: 10m
+                    memory: 64Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop:
+                    - ALL
+              securityContext:
+                runAsNonRoot: true
+              serviceAccountName: github-arc-operator-controller-manager
+              terminationGracePeriodSeconds: 10
+      permissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
+          - coordination.k8s.io
+          resources:
+          - leases
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
+          - ""
+          resources:
+          - events
+          verbs:
+          - create
+          - patch
+        serviceAccountName: github-arc-operator-controller-manager
+    strategy: deployment
   installModes:
   - supported: false
     type: OwnNamespace
@@ -44,4 +325,4 @@ spec:
   provider:
     name: boxboat-github-practice
     url: https://github.com/boxboat-github-practice
-  version: 0.0.0
+  version: 1.0.4
