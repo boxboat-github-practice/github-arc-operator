@@ -4,7 +4,6 @@ helm based operator for https://github.com/actions-runner-controller/actions-run
   - https://sdk.operatorframework.io/docs/building-operators/helm/tutorial/
 
 # Usage
-## Install
 1. Install prereqs
     - [cert-manager](https://cert-manager.io/docs/installation/helm/)
       - on openshift, use the cert-manager operator provided by redhat (not the community one)
@@ -19,6 +18,11 @@ helm based operator for https://github.com/actions-runner-controller/actions-run
       operator-sdk run bundle ghcr.io/boxboat-github-practice/github-arc-operator-bundle:1.0.1
       ```    
 
+1. Create Github secret
+    ```sh
+    kubectl create secret generic ghauth --from-literal=github_token="<api token>" --namespace openshift-operators
+    ```
+
 1. Create ActionsRunnerController instance
     ```yaml
     kind: ActionsRunnerController
@@ -31,8 +35,7 @@ helm based operator for https://github.com/actions-runner-controller/actions-run
         name: ghauth
       createRunnerNamespaces: true
       runnerNamespaces:
-        - test1
-        - test2
+        - ghrunners
     ```
     - the spec attribute here supports all the values defined in the official actions runner controller [helm chart](https://github.com/actions/actions-runner-controller/tree/master/charts/actions-runner-controller)
     - values added for additional operator support:
@@ -43,8 +46,23 @@ helm based operator for https://github.com/actions-runner-controller/actions-run
     |runnerNamespaces|list|["ghrunners"]|namespaces to watch for runner deployments|
     |createRunnerNamespaces|boolean|false|set to true to create namespaces on controller instantiation|
     |runnerServiceAccount.name|string|"ghr-sa"|service account name to use for runners to use will be created in all watched namespaces|
+    |securityContextConstraint.create|boolean|true|set to true to create security context constraint on controller instantiation|
+    |securityContextConstraint.name|string|"ghr-priv"|name of security context constraint to use for controller|
 
 
+1. after an actions runner controller instance has been created, runner deployments can be created
+    ```yaml
+    apiVersion: actions.summerwind.dev/v1alpha1
+    kind: RunnerDeployment
+    metadata:
+      name: example-runnerdeploy
+      namespace: ghrunners
+    spec:
+      replicas: 1
+      template:
+        spec:
+          repository: boxboat-github-practice/github-arc-operator
+    ```
 
 # Development
 ## Initialize
