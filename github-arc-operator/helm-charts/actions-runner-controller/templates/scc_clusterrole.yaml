@@ -13,7 +13,7 @@ rules:
 - apiGroups:
   - security.openshift.io
   resourceNames:
-  - {{  .Values.securityContextConstraint.name }}
+  - {{ .Values.securityContextConstraint.name }}
   resources:
   - securitycontextconstraints
   verbs:
