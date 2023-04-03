@@ -51,11 +51,17 @@ spec:
         {{- if .Values.githubWebhookServer.queueLimit }}
         - "--queue-limit={{ .Values.githubWebhookServer.queueLimit }}"
         {{- end }}
-        {{- if .Values.githubWebhookServer.logFormat  }}  
+        {{- if .Values.githubWebhookServer.logFormat  }}
         - "--log-format={{ .Values.githubWebhookServer.logFormat }}"
         {{- end }}
         command:
         - "/github-webhook-server"
+        {{- if .Values.githubWebhookServer.lifecycle }}
+        {{- with .Values.githubWebhookServer.lifecycle }}
+        lifecycle:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- end }}
         env:
         - name: GITHUB_WEBHOOK_SECRET_TOKEN
           valueFrom:
@@ -111,9 +117,13 @@ spec:
               name: {{ include "actions-runner-controller.secretName" . }}
               optional: true
         {{- end }}
+        {{- if kindIs "slice" .Values.githubWebhookServer.env }}
+        {{- toYaml .Values.githubWebhookServer.env | nindent 8 }}
+        {{- else }}
         {{- range $key, $val := .Values.githubWebhookServer.env }}
         - name: {{ $key }}
           value: {{ $val | quote }}
+        {{- end }}
         {{- end }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag  | default (cat "v" .Chart.AppVersion | replace " " "") }}"
         name: github-webhook-server
@@ -148,7 +158,7 @@ spec:
         securityContext:
           {{- toYaml .Values.securityContext | nindent 12 }}
       {{- end }}
-      terminationGracePeriodSeconds: 10
+      terminationGracePeriodSeconds: {{ .Values.githubWebhookServer.terminationGracePeriodSeconds }}
       {{- with .Values.githubWebhookServer.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

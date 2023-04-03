@@ -262,14 +262,6 @@ rules:
   - patch
   - update
   - watch
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - get
-  - list
-  - watch
 {{- if .Values.runner.statusUpdateHook.enabled }}
 - apiGroups:
   - ""
@@ -321,13 +313,6 @@ rules:
   verbs:
   - get
   - list
-  - create
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
   - create
   - delete
 {{- end }}
