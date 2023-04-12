@@ -4,12 +4,11 @@ metadata:
   annotations:
     categories: Developer Tools, Integration & Delivery, OpenShift Optional
     containerImage: ghcr.io/boxboat-github-practice/github-arc-operator:1.1.0
-    description: Operator for deploying the github actions runner controller
     repository: https://github.com/boxboat-github-practice/github-arc-operator
     description: Operator for deploying the github actions runner controller
     alm-examples: '[]'
     capabilities: Basic Install
-  name: github-arc-operator.v0.0.0
+  name: github-arc-operator.v1.1.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
